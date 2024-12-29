@@ -20,7 +20,7 @@ public class ProductService {
     }
 
     public Product getProduct(long id) {
-        Optional<Product> productOpt = productRepository.findById(id);
+        Optional<Product> productOpt = productRepository.findById(id);      //Optional is a utilitary class i use it because it can handle null type in case findById() return null
         if(productOpt.isPresent()) return productOpt.get();
         throw new IllegalArgumentException("This product doesn' exist");
     }
@@ -29,6 +29,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    /**i apllyed a simple and straightforward updateProduct() *
+     * method require a complete product with all fields to update,*
+     * wish is not optimal. Future update of the project will improve this method to handle partial update */
     public Product updateProduct(long id, Product p){
         Product existingProduct = getProduct(id);
         existingProduct.setDescription(p.getDescription());
@@ -41,6 +44,11 @@ public class ProductService {
 
     public void deleteProduct(long id){
         productRepository.deleteById(id);
+    }
+
+
+    public List<Product> searchByName(String na){
+        return productRepository.findByNameContaining(na);
     }
 
 
